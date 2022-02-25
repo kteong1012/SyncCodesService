@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "519a11d1-4ae8-4f18-b227-6f1734bc4aee": {
+      "ProjectGuid": "519a11d1-4ae8-4f18-b227-6f1734bc4aee",
+      "DisplayName": "SyncCodesService",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "杂项文件",
+      "ColorIndex": -1
+    },
+    "03e2ef9a-ae57-4fcb-a09b-23cd965914aa": {
+      "ProjectGuid": "03e2ef9a-ae57-4fcb-a09b-23cd965914aa",
+      "DisplayName": "AdjustETCsprojs",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}
