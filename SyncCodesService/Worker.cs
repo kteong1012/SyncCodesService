@@ -27,16 +27,23 @@ namespace SyncCodesService
             _watcher.EnableRaisingEvents = true;
             _watcher.Created += OnCreated;
             _watcher.Deleted += OnDeleted;
+
+            _logger.LogInformation($"正在监听目录{new DirectoryInfo(codesRoot).FullName}，按ESC可退出。");
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
+                if(Console.ReadKey().Key == ConsoleKey.Escape)
+                {
+                    break;
+                }
                 _refreshed = false;
                 await Task.Delay(1000, stoppingToken);
             }
             _watcher.EnableRaisingEvents = false;
+            Environment.Exit(0);
         }
 
 
