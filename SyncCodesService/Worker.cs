@@ -76,7 +76,7 @@ namespace SyncCodesService
                 string name = codeName.Key;
                 string csproj = codeName.Value;
 
-                if (path.StartsWith(_workSpace + "/Codes/" + name) && !_refreshed.Contains(name))
+                if (path.StartsWith($"{_workSpace}/Codes/{name}/") && !_refreshed.Contains(name))
                 {
                     AdjustTool.Adjust(csproj, name);
                     _refreshed.Add(name);
