@@ -15,7 +15,12 @@
       "ProjectGuid": "03e2ef9a-ae57-4fcb-a09b-23cd965914aa",
       "DisplayName": "AdjustETCsprojs",
       "ColorIndex": 1
+    },
+    "a24690ad-07f4-4cd1-8cca-54a1b673a151": {
+      "ProjectGuid": "a24690ad-07f4-4cd1-8cca-54a1b673a151",
+      "DisplayName": "AdjustETCsprojs",
+      "ColorIndex": 2
     }
   },
-  "NextColorIndex": 2
+  "NextColorIndex": 3
 }

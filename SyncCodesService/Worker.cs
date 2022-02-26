@@ -3,16 +3,14 @@ namespace SyncCodesService
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private readonly IConfiguration _configuration;
         private readonly string _workSpace;
         private FileSystemWatcher _watcher;
-
-        private bool _refreshed = false;
+        private Dictionary<string, string> _codeNames;
+        private List<string> _refreshed = new List<string>();
         public Worker(ILogger<Worker> logger, IConfiguration config)
         {
             _logger = logger;
-            _configuration = config;
-            if(string.IsNullOrEmpty(Args.WorkPlace))
+            if (string.IsNullOrEmpty(Args.WorkPlace))
             {
                 _workSpace = config["MyConfig:WorkSpace"];
             }
@@ -21,12 +19,25 @@ namespace SyncCodesService
                 _workSpace = Args.WorkPlace;
             }
 
+            DirectoryInfo workDir = new DirectoryInfo(_workSpace);
+            if (!workDir.Exists)
+            {
+                _logger.LogError($"目录{_workSpace}不存在,检查参数");
+            }
+            _workSpace = workDir.FullName.Replace("\\", "/");
             string codesRoot = Path.Combine(_workSpace, "Codes");
             _watcher = new FileSystemWatcher(codesRoot);
             _watcher.IncludeSubdirectories = true;
             _watcher.EnableRaisingEvents = true;
             _watcher.Created += OnCreated;
             _watcher.Deleted += OnDeleted;
+            _codeNames = new Dictionary<string, string>()
+            {
+                {"Model", _workSpace + "/Unity.Model.csproj"},
+                {"ModelView", _workSpace + "/Unity.ModelView.csproj"},
+                {"Hotfix", _workSpace + "/Unity.Hotfix.csproj"},
+                {"HotfixView", _workSpace + "/Unity.HotfixView.csproj"},
+            };
 
             _logger.LogInformation($"正在监听目录{new DirectoryInfo(codesRoot).FullName}，按ESC可退出。");
         }
@@ -35,11 +46,7 @@ namespace SyncCodesService
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                if(Console.ReadKey().Key == ConsoleKey.Escape)
-                {
-                    break;
-                }
-                _refreshed = false;
+                _refreshed.Clear();
                 await Task.Delay(1000, stoppingToken);
             }
             _watcher.EnableRaisingEvents = false;
@@ -59,25 +66,22 @@ namespace SyncCodesService
 
         private void Refresh(string path)
         {
-            if (_refreshed)
-            {
-                return;
-            }
-
             if (Path.GetExtension(path).ToLower() != ".cs")
             {
                 return;
             }
-            string root = _workSpace;
-            if (!Directory.Exists(root))
+            path = path.Replace("\\", "/");
+            foreach (var codeName in _codeNames)
             {
-                _logger.LogError($"目录{root}不存在,检查参数");
+                string name = codeName.Key;
+                string csproj = codeName.Value;
+
+                if (path.StartsWith(_workSpace + "/Codes/" + name) && !_refreshed.Contains(name))
+                {
+                    AdjustTool.Adjust(csproj, name);
+                    _refreshed.Add(name);
+                }
             }
-            AdjustTool.Adjust(root + @"\Unity.Model.csproj", "Model");
-            AdjustTool.Adjust(root + @"\Unity.ModelView.csproj", "ModelView");
-            AdjustTool.Adjust(root + @"\Unity.Hotfix.csproj", "Hotfix");
-            AdjustTool.Adjust(root + @"\Unity.HotfixView.csproj", "HotfixView");
-            _refreshed = true;
         }
     }
 }
