@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>dotnet-SyncCodesService-4F8FC273-FD16-4CAC-8343-FD0A7C633092</UserSecretsId>
+    <BaseOutputPath>output</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
