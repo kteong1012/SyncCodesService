@@ -39,7 +39,12 @@ namespace SyncCodesService
                 {"HotfixView", _workSpace + "/Unity.HotfixView.csproj"},
             };
 
+            //开始就刷一遍
+            _logger.LogInformation($"已开启监听服务。");
+            Refresh("", true);
+
             _logger.LogInformation($"正在监听目录{new DirectoryInfo(codesRoot).FullName}，按ESC可退出。");
+
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -64,9 +69,9 @@ namespace SyncCodesService
             Refresh(e.FullPath);
         }
 
-        private void Refresh(string path)
+        private void Refresh(string path, bool force = false)
         {
-            if (Path.GetExtension(path).ToLower() != ".cs")
+            if (!force && Path.GetExtension(path).ToLower() != ".cs")
             {
                 return;
             }
@@ -76,7 +81,7 @@ namespace SyncCodesService
                 string name = codeName.Key;
                 string csproj = codeName.Value;
 
-                if (path.StartsWith($"{_workSpace}/Codes/{name}/") && !_refreshed.Contains(name))
+                if (force || path.StartsWith($"{_workSpace}/Codes/{name}/") && !_refreshed.Contains(name))
                 {
                     AdjustTool.Adjust(csproj, name);
                     _refreshed.Add(name);
