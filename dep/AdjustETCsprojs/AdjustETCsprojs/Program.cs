@@ -44,7 +44,6 @@ public class AdjustTool
             XElement firstItemGroup = project.Elements().First(e => e.Name.LocalName == "ItemGroup");
             XElement compile = new XElement(project.Name.ToString().Replace("Project", "Compile"), new XAttribute("Include", localPath));
             firstItemGroup.Add(compile);
-            Console.WriteLine(localPath);
         }
         doc.Save(csprojPath);
         Console.WriteLine($"刷新{srcDir}成功");
