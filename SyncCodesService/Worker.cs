@@ -80,10 +80,10 @@ namespace SyncCodesService
             {
                 string name = codeName.Key;
                 string csproj = codeName.Value;
-
-                if (force || path.StartsWith($"{_workSpace}/Codes/{name}/") && !_refreshed.Contains(name))
+                string srcDir = $"{_workSpace}/Codes/{name}/";
+                if (force || path.StartsWith(srcDir) && !_refreshed.Contains(name))
                 {
-                    AdjustTool.Adjust(csproj, name);
+                    AdjustTool.Adjust(_workSpace, csproj, srcDir);
                     _refreshed.Add(name);
                 }
             }

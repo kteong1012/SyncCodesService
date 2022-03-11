@@ -1,31 +1,18 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Xml.Linq;
-string command = args[0];
-if (command == "refresh")
-{
-    string root = args[1].Trim();
-    AdjustTool.Adjust(root + @"\Unity.Model.csproj", "Model");
-    AdjustTool.Adjust(root + @"\Unity.ModelView.csproj", "ModelView");
-    AdjustTool.Adjust(root + @"\Unity.Hotfix.csproj", "Hotfix");
-    AdjustTool.Adjust(root + @"\Unity.HotfixView.csproj", "HotfixView");
-}
-else if (command == "clear")
-{
-    string root = args[1].Trim();
-    AdjustTool.Adjust(root + @"\Unity.Model.csproj", "Model", false);
-    AdjustTool.Adjust(root + @"\Unity.ModelView.csproj", "ModelView", false);
-    AdjustTool.Adjust(root + @"\Unity.Hotfix.csproj", "Hotfix", false);
-    AdjustTool.Adjust(root + @"\Unity.HotfixView.csproj", "HotfixView", false);
-}
-//string root = @"D:\Github\HoH\Unity";
 
-
+Console.WriteLine("Start");
 
 public class AdjustTool
 {
-    public static void Adjust(string csprojPath, string srcDir, bool addComment = true)
+    public static void Adjust(string workPlace, string csprojPath, string srcDir)
     {
-        string includeValue = $"Codes\\{srcDir}\\**\\*.cs";
+        DirectoryInfo dir = new DirectoryInfo(srcDir);
+        if (!dir.Exists)
+        {
+            return;
+        }
+        srcDir = srcDir.Replace("\\", "/");
         XDocument doc = XDocument.Load(csprojPath);
         XElement project = doc.Elements().First(e => e.Name.LocalName == "Project");
         var comments = doc.Nodes().Where(n => n.NodeType == System.Xml.XmlNodeType.Comment).ToList();
@@ -49,15 +36,34 @@ public class AdjustTool
         {
             item.Remove();
         }
-        XElement firstItemGroup = project.Elements().First(e => e.Name.LocalName == "ItemGroup");
-        XElement compile = new XElement(project.Name.ToString().Replace("Project", "Compile"), new XAttribute("Include", includeValue));
-        firstItemGroup.Add(compile);
-        if (addComment)
+        var infos = GetAllFiles(dir, "*.cs");
+        foreach (var csFile in infos)
         {
-            XComment xComment = new XComment(DateTime.Now.ToString());
-            doc.Add(xComment);
+            string fullPath = csFile.FullName.Replace("\\", "/");
+            string localPath = fullPath.Substring(workPlace.Length + 1, fullPath.Length - workPlace.Length -1).Replace("/","\\");
+            XElement firstItemGroup = project.Elements().First(e => e.Name.LocalName == "ItemGroup");
+            XElement compile = new XElement(project.Name.ToString().Replace("Project", "Compile"), new XAttribute("Include", localPath));
+            firstItemGroup.Add(compile);
+            Console.WriteLine(localPath);
         }
         doc.Save(csprojPath);
         Console.WriteLine($"刷新{srcDir}成功");
+    }
+
+    private static List<FileInfo> GetAllFiles(DirectoryInfo dir, string pattern)
+    {
+        List<FileInfo> infos = new List<FileInfo>();
+        foreach (var file in dir.GetFiles(pattern))
+        {
+            infos.Add(file);
+        }
+        foreach (var subDir in dir.GetDirectories())
+        {
+            foreach (var file in GetAllFiles(subDir, pattern))
+            {
+                infos.Add(file);
+            }
+        }
+        return infos;
     }
 }
