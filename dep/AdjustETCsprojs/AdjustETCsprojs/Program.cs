@@ -46,7 +46,7 @@ public class AdjustTool
             firstItemGroup.Add(compile);
         }
         doc.Save(csprojPath);
-        Console.WriteLine($"刷新{srcDir}成功");
+        Console.WriteLine($"刷新成功: {Path.GetFileNameWithoutExtension(csprojPath)}");
     }
 
     private static List<FileInfo> GetAllFiles(DirectoryInfo dir, string pattern)
