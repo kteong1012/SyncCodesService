@@ -40,24 +40,29 @@ namespace SyncCodesService
             };
 
             //开始就刷一遍
-            _logger.LogInformation($"已开启监听服务。按R键可以手动刷新所有工程。");
+            _logger.LogInformation(@"已开启监听服务。
+·  按R键可手动刷新
+·  按ESC键结束");
             Refresh("", true);
 
-            _logger.LogInformation($"正在监听目录{new DirectoryInfo(codesRoot).FullName}，按ESC可退出。");
-
+            _logger.LogInformation($"正在监听目录{new DirectoryInfo(codesRoot).FullName}。");
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (Console.ReadKey(true).Key == ConsoleKey.Escape)
+                if (Console.KeyAvailable)
                 {
-                    break;
-                }
-                if (Console.ReadKey(true).Key == ConsoleKey.R)
-                {
-                    Refresh("", true);
+                    var key = Console.ReadKey(true).Key;
+                    if(key == ConsoleKey.R)
+                    {
+                        Refresh("", true);
+                    }
+                    else if(key == ConsoleKey.Escape)
+                    {
+                        break;
+                    }
                 }
                 _refreshed.Clear();
                 await Task.Delay(1000, stoppingToken);

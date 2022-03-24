@@ -34,7 +34,6 @@ E:\Projects\Plugins\SyncCodesService\dep\AdjustETCsprojs\AdjustETCsprojs\bin\Deb
 E:\Projects\Plugins\SyncCodesService\dep\AdjustETCsprojs\AdjustETCsprojs\bin\Debug\net6.0\AdjustETCsprojs.dll
 E:\Projects\Plugins\SyncCodesService\dep\AdjustETCsprojs\AdjustETCsprojs\bin\Debug\net6.0\ref\AdjustETCsprojs.dll
 E:\Projects\Plugins\SyncCodesService\dep\AdjustETCsprojs\AdjustETCsprojs\bin\Debug\net6.0\AdjustETCsprojs.pdb
-E:\Projects\Plugins\SyncCodesService\dep\AdjustETCsprojs\AdjustETCsprojs\obj\Debug\net6.0\AdjustETCsprojs.csproj.AssemblyReference.cache
 E:\Projects\Plugins\SyncCodesService\dep\AdjustETCsprojs\AdjustETCsprojs\obj\Debug\net6.0\AdjustETCsprojs.GeneratedMSBuildEditorConfig.editorconfig
 E:\Projects\Plugins\SyncCodesService\dep\AdjustETCsprojs\AdjustETCsprojs\obj\Debug\net6.0\AdjustETCsprojs.AssemblyInfoInputs.cache
 E:\Projects\Plugins\SyncCodesService\dep\AdjustETCsprojs\AdjustETCsprojs\obj\Debug\net6.0\AdjustETCsprojs.AssemblyInfo.cs
