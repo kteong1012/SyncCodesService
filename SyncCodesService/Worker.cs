@@ -40,7 +40,7 @@ namespace SyncCodesService
             };
 
             //开始就刷一遍
-            _logger.LogInformation($"已开启监听服务。");
+            _logger.LogInformation($"已开启监听服务。按R键可以手动刷新所有工程。");
             Refresh("", true);
 
             _logger.LogInformation($"正在监听目录{new DirectoryInfo(codesRoot).FullName}，按ESC可退出。");
@@ -51,10 +51,19 @@ namespace SyncCodesService
         {
             while (!stoppingToken.IsCancellationRequested)
             {
+                if (Console.ReadKey(true).Key == ConsoleKey.Escape)
+                {
+                    break;
+                }
+                if (Console.ReadKey(true).Key == ConsoleKey.R)
+                {
+                    Refresh("", true);
+                }
                 _refreshed.Clear();
                 await Task.Delay(1000, stoppingToken);
             }
             _watcher.EnableRaisingEvents = false;
+            _logger.LogInformation($"已结束监听服务。");
             Environment.Exit(0);
         }
 

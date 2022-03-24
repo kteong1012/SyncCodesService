@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\lintianbao.carson\\.nuget\\packages\\": {}
+    "C:\\Users\\kteon\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\SyncCodesService\\dep\\AdjustETCsprojs\\AdjustETCsprojs\\AdjustETCsprojs.csproj",
+      "projectUniqueName": "E:\\Projects\\Plugins\\SyncCodesService\\dep\\AdjustETCsprojs\\AdjustETCsprojs\\AdjustETCsprojs.csproj",
       "projectName": "AdjustETCsprojs",
-      "projectPath": "D:\\Projects\\SyncCodesService\\dep\\AdjustETCsprojs\\AdjustETCsprojs\\AdjustETCsprojs.csproj",
-      "packagesPath": "C:\\Users\\lintianbao.carson\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\SyncCodesService\\dep\\AdjustETCsprojs\\AdjustETCsprojs\\obj\\",
+      "projectPath": "E:\\Projects\\Plugins\\SyncCodesService\\dep\\AdjustETCsprojs\\AdjustETCsprojs\\AdjustETCsprojs.csproj",
+      "packagesPath": "C:\\Users\\kteon\\.nuget\\packages\\",
+      "outputPath": "E:\\Projects\\Plugins\\SyncCodesService\\dep\\AdjustETCsprojs\\AdjustETCsprojs\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\lintianbao.carson\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\kteon\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
